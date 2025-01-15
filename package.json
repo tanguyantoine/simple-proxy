@@ -1,0 +1,26 @@
+{
+  "name": "@tanguyantoine/simple-proxy",
+  "version": "1.0.0",
+  "description": "A simple HTTP proxy server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanguyantoine/simple-proxy.git"
+  },
+  "keywords": [
+    "proxy",
+    "http",
+    "https"
+  ],
+  "author": "Tanguy Antoine",
+  "license": "MIT"
+}
