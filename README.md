@@ -1,16 +1,17 @@
 # Simple Proxy
 
-A lightweight and configurable HTTP/HTTPS proxy server that forwards requests to a specified target URL. It's designed to be simple, efficient, and easily deployable.
+A lightweight and configurable HTTP/HTTPS proxy server that forwards requests to a specified target URL.
 
-## Features
+## Overview
 
-- Forward HTTP/HTTPS requests to a specified target
-- Configurable port
-- Customizable request headers
-- Available as NPM package and Docker image
-- Minimal dependencies
+Simple Proxy is a minimalist yet powerful HTTP/HTTPS proxy server with the following key features:
+- 🚀 Lightweight with minimal dependencies
+- 🔧 Easy configuration through CLI flags or environment variables
+- 🐳 Available as Docker image and NPM package
+- 🔄 Supports both HTTP and HTTPS protocols
+- 📝 Customizable request headers
 
-## Installation
+## Installation & Usage
 
 ### NPM Package
 
@@ -18,85 +19,86 @@ A lightweight and configurable HTTP/HTTPS proxy server that forwards requests to
 # Install globally
 npm install -g @tanguyantoine/simple-proxy
 
-# Install in your project
-npm install @tanguyantoine/simple-proxy
+# Run with CLI flags
+simple-proxy --target https://api.example.com --port 3000
+
+# Or use environment variables
+TARGET=https://api.example.com simple-proxy
+
+# Or use directly with npx
+npx @tanguyantoine/simple-proxy --target https://api.example.com
 ```
 
-### Docker Image
+### Docker
 
 ```bash
-# Pull from Docker Hub
+# Pull the image
 docker pull tanguyantoine/simple-proxy:latest
-
-# Or from GitHub Container Registry
+# or from GitHub Container Registry
 docker pull ghcr.io/tanguyantoine/simple-proxy:latest
-```
 
-## Usage
-
-### Running with Node.js
-
-```bash
-# Using npx
-npx @tanguyantoine/simple-proxy
-
-# Or if installed globally
-simple-proxy
-```
-
-### Running with Docker
-
-```bash
+# Run with environment variables
 docker run -e TARGET=https://api.example.com -p 3000:3000 tanguyantoine/simple-proxy
+
+# Or use CLI flags (requires entrypoint override)
+docker run -p 3000:3000 tanguyantoine/simple-proxy --target https://api.example.com
 ```
 
-## Configuration
+## Configuration Options
 
-The proxy can be configured using environment variables:
+You can configure the proxy using either CLI flags or environment variables:
 
-| Variable        | Description                                                     | Required | Default |
-| --------------- | --------------------------------------------------------------- | -------- | ------- |
-| `TARGET`        | Target URL to proxy requests to (e.g., https://api.example.com) | Yes      | -       |
-| `PORT`          | Port number for the proxy server                                | No       | 3000    |
-| `EXTRA_HEADERS` | JSON string of additional headers to add to proxied requests    | No       | {}      |
+| Option          | CLI Flag      | Environment Var | Description                                  | Required | Default |
+| --------------- | ------------- | -------------- | -------------------------------------------- | -------- | ------- |
+| Target URL      | `--target`    | `TARGET`       | Target URL to proxy requests to              | Yes      | -       |
+| Port            | `--port`      | `PORT`         | Port number for the proxy server             | No       | 3000    |
+| Extra Headers   | `--headers`   | `EXTRA_HEADERS`| JSON string of additional headers            | No       | {}      |
 
-### Examples
+### Example Configurations
 
-1. Basic usage with custom port:
-
+1. Using CLI flags:
 ```bash
-# Using Node.js
-PORT=8080 TARGET=https://api.example.com node index.js
+# Basic usage with custom port
+simple-proxy --target https://api.example.com --port 8080
 
-# Using Docker
-docker run -e TARGET=https://api.example.com -e PORT=8080 -p 8080:8080 tanguyantoine/simple-proxy
+# Adding custom headers
+simple-proxy --target https://api.example.com --headers '{"X-API-Key": "123456"}'
 ```
 
-2. Adding custom headers:
-
+2. Using environment variables:
 ```bash
-# Using Node.js
-EXTRA_HEADERS='{"X-API-Key": "123456", "X-Custom": "value"}' TARGET=https://api.example.com node index.js
+# Basic usage with custom port
+PORT=8080 TARGET=https://api.example.com simple-proxy
 
-# Using Docker
-docker run -e TARGET=https://api.example.com -e 'EXTRA_HEADERS={"X-API-Key": "123456", "X-Custom": "value"}' -p 3000:3000 tanguyantoine/simple-proxy
+# Adding custom headers
+EXTRA_HEADERS='{"X-API-Key": "123456"}' TARGET=https://api.example.com simple-proxy
+```
+
+3. Docker with CLI flags:
+```bash
+docker run \
+  -p 3000:3000 \
+  tanguyantoine/simple-proxy \
+  --target https://api.example.com \
+  --headers '{"X-API-Key": "123456"}'
 ```
 
 ## Development
+
+To contribute or run from source:
 
 ```bash
 # Clone the repository
 git clone https://github.com/tanguyantoine/simple-proxy.git
 cd simple-proxy
 
-# Run locally
-TARGET=https://api.example.com node index.js
+# Install dependencies
+npm install
+
+# Start the proxy (using CLI flags)
+npm start -- --target https://api.example.com
 ```
 
 ## License
 
-MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+MIT License - See LICENSE file for details
