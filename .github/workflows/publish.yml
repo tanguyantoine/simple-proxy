@@ -3,7 +3,11 @@ name: Publish Package
 on:
   release:
     types: [created]
-
+permissions:
+  contents: read
+  packages: write
+  attestations: write
+  id-token: write
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
