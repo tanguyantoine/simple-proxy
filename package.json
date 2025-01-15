@@ -1,8 +1,11 @@
 {
   "name": "@tanguyantoine/simple-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple HTTP proxy server",
   "main": "index.js",
+  "bin": {
+    "simple-proxy": "./index.js"
+  },
   "scripts": {
     "start": "node index.js"
   },
@@ -19,7 +22,8 @@
   "keywords": [
     "proxy",
     "http",
-    "https"
+    "https",
+    "cli"
   ],
   "author": "Tanguy Antoine",
   "license": "MIT"

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // @ts-check
 const http = require('http')
 const https = require('https')
