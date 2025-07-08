@@ -102,5 +102,33 @@ function onRequest(req, res) {
   })
 }
 
-http.createServer(onRequest).listen(port)
+const server = http.createServer(onRequest).listen(port)
 console.log('Listening on port ' + port)
+
+// Graceful shutdown handling
+let isShuttingDown = false
+
+function gracefulShutdown(signal) {
+  if (isShuttingDown) {
+    console.log('Force shutdown requested, exiting immediately')
+    process.exit(1)
+  }
+  
+  console.log(`Received ${signal}, shutting down gracefully...`)
+  isShuttingDown = true
+  
+  server.close(() => {
+    console.log('HTTP server closed')
+    process.exit(0)
+  })
+  
+  // Force exit after 10 seconds if graceful shutdown fails
+  setTimeout(() => {
+    console.log('Could not close connections in time, forcefully shutting down')
+    process.exit(1)
+  }, 10000)
+}
+
+// Handle shutdown signals
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
+process.on('SIGINT', () => gracefulShutdown('SIGINT'))
